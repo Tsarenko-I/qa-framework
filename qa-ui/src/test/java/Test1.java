@@ -25,6 +25,6 @@ public class Test1 {
     public void main_page_test() {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
-        sleep(10000);
+        sleep(3000);
     }
 }
