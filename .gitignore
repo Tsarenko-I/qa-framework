@@ -1,0 +1,5 @@
+build/
+Log4j/
+allure-results/
+.idea/
+target/
