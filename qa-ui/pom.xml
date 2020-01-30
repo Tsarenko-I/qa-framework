@@ -11,6 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>qa-ui</artifactId>
 
+    <properties>
+        <aspectj.version>1.8.10</aspectj.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -90,6 +94,20 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.26</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>2.13.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>2.13.1</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
 
