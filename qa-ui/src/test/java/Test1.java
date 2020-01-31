@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 
@@ -18,7 +19,11 @@ public class Test1 {
     public void beforeClass() {
         SelenoidDriver.initDriver();
         environmentConfig = getOrCreate(EnvironmentConfig.class);
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true));
+    }
+
+    @BeforeMethod
+    public void beforemethood(){
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
     }
 
     @Test
