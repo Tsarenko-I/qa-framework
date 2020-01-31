@@ -10,6 +10,5 @@ public class MainPage {
     @Step("Open browser and Main Page")
     public void openMainPage(String urlMainPage) {
         open(urlMainPage);
-        throw new AssertionError();
     }
 }

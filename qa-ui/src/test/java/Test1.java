@@ -1,5 +1,6 @@
 import ConfigProperty.EnvironmentConfig;
 import ConfigSelenoid.SelenoidDriver;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Description;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -9,6 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.MainPage;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.aeonbits.owner.ConfigCache.getOrCreate;
 
@@ -32,6 +34,8 @@ public class Test1 {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
         sleep(3000);
-        //     Assert.assertTrue(false);
+        SelenideElement element = $("dfsdf");
+        element.click();
+        Assert.assertTrue(false);
     }
 }
