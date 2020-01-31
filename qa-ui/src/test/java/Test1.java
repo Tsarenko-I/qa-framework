@@ -23,7 +23,7 @@ public class Test1 {
 
     @BeforeMethod
     public void beforemethood(){
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(true));
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class Test1 {
     public void main_page_test() {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
-        Assert.assertTrue(false);
         sleep(3000);
+        //     Assert.assertTrue(false);
     }
 }
