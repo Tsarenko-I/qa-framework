@@ -95,11 +95,6 @@
             <version>7.0.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-selenide</artifactId>
-            <version>2.12.1</version>
-        </dependency>
         <!--  slf4j-log4j12  -->
         <dependency>
             <groupId>org.slf4j</groupId>
