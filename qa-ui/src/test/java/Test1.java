@@ -3,6 +3,7 @@ import ConfigSelenoid.SelenoidDriver;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Description;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.MainPage;
@@ -17,7 +18,7 @@ public class Test1 {
     public void beforeClass() {
         SelenoidDriver.initDriver();
         environmentConfig = getOrCreate(EnvironmentConfig.class);
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true));
     }
 
     @Test
@@ -25,6 +26,7 @@ public class Test1 {
     public void main_page_test() {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
+        Assert.assertTrue(false);
         sleep(3000);
     }
 }

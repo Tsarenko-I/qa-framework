@@ -37,5 +37,6 @@ public class SelenoidDriver{
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", false);
         Configuration.browserCapabilities = capabilities;
+        Configuration.reportsFolder = "target/test-result/reports";
     }
 }
