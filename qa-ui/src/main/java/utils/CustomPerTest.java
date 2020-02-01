@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static io.qameta.allure.Allure.addAttachment;
+import static java.lang.Thread.sleep;
 import static utils.CustomAllureSelenide.generateHtmlVideoReport;
 import static utils.CustomAllureSelenide.getVideoUrl;
 
@@ -35,6 +36,11 @@ public class CustomPerTest extends BrowserPerTest {
     public void onTestSuccess(ITestResult result) {
         super.onTestSuccess(result);
         addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         closeWebDriver();
     }
 
