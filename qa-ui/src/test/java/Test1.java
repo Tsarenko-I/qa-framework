@@ -35,8 +35,8 @@ public class Test1 {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
         sleep(3000);
-        SelenideElement element = $("dfsdf");
-        element.click();
-        Assert.assertTrue(false);
+//        SelenideElement element = $("dfsdf");
+//        element.click();
+//        Assert.assertTrue(false);
     }
 }
