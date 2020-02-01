@@ -7,14 +7,17 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import utils.CustomAllureSelenide;
+import utils.CustomPerTest;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.aeonbits.owner.ConfigCache.getOrCreate;
 
+@Listeners({CustomPerTest.class})
 public class Test1 {
     public EnvironmentConfig environmentConfig;
 
@@ -26,7 +29,7 @@ public class Test1 {
 
     @BeforeMethod
     public void beforemethood(){
-        SelenideLogger.addListener("AllureSelenide", new CustomAllureSelenide().screenshots(true).savePageSource(false));
+       // SelenideLogger.addListener("AllureSelenide", new CustomAllureSelenide().screenshots(true).savePageSource(false));
     }
 
     @Test
