@@ -11,7 +11,7 @@ public class MainPage {
     @Step("Open browser and Main Page")
     public void openMainPage(String urlMainPage) {
         open(urlMainPage);
-        Assertion assertion = new Assertion();
-        assertion.assertTrue(false);
+//        Assertion assertion = new Assertion();
+//        assertion.assertTrue(false);
     }
 }
