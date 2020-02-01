@@ -35,6 +35,7 @@ public class CustomAllureSelenide extends AllureSelenide {
         lifecycle.getCurrentTestCaseOrStep().ifPresent(parentUuid -> {
             switch (event.getStatus()) {
                 case PASS:
+                    getScreenshotBytes().ifPresent(bytes -> lifecycle.addAttachment("Screenshot", "image/png", "png", bytes));
                     lifecycle.updateStep(step -> step.setStatus(Status.PASSED));
                     addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
                     break;
