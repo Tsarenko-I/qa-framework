@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Test Regression Suite" parallel="methods" thread-count="3"  verbose="1">
+    <listeners>
+        <listener class-name="com.codeborne.selenide.testng.GlobalTextReport"/>
+    </listeners>
+
+    <test name="Debug tests">
+        <classes>
+            <class name="Test1"/>
+            <class name="Test2"/>
+            <class name="Test3"/>
+        </classes>
+    </test>
+</suite>

@@ -13,8 +13,8 @@ import utils.CustomAllureSelenide;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.aeonbits.owner.ConfigCache.getOrCreate;
 
-@Feature("Feature 1")
-public class Test1 {
+@Feature("Feature 2")
+public class Test2 {
     public EnvironmentConfig environmentConfig;
 
     @BeforeClass
