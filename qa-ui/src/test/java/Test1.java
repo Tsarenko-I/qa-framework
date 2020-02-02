@@ -35,9 +35,5 @@ public class Test1 {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
         sleep(3000);
-        throw new AssertionError();
-//        SelenideElement element = $("dfsdf");
-//        element.click();
-//        Assert.assertTrue(false);
     }
 }
