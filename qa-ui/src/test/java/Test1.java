@@ -34,5 +34,6 @@ public class Test1 {
         MainPage mainPage = new MainPage();
         mainPage.openMainPage(environmentConfig.url());
         sleep(3000);
+
     }
 }
