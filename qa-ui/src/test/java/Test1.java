@@ -2,11 +2,9 @@ import ConfigProperty.EnvironmentConfig;
 import ConfigSelenoid.SelenoidDriver;
 import com.codeborne.selenide.ex.UIAssertionError;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import com.codeborne.selenide.testng.GlobalTextReport;
 import io.qameta.allure.Description;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.MainPage;
 import utils.CustomAllureSelenide;
@@ -14,7 +12,6 @@ import utils.CustomAllureSelenide;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.aeonbits.owner.ConfigCache.getOrCreate;
 
-@Listeners({GlobalTextReport.class})
 public class Test1 {
     public EnvironmentConfig environmentConfig;
 

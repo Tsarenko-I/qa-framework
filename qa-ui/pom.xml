@@ -13,6 +13,7 @@
 
     <properties>
         <aspectj.version>1.8.3</aspectj.version>
+        <suiteXmlFile>${project.basedir}/src/test/resources/xmls/test.xml</suiteXmlFile>
     </properties>
 
     <build>
@@ -35,6 +36,9 @@
                     <argLine>
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                         <application.environment>${application.environment}</application.environment>
