@@ -4,14 +4,18 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.testng.BrowserPerTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.selenide.AllureSelenide;
+import io.qameta.allure.selenide.LogType;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 
 import java.io.ByteArrayInputStream;
+import java.util.Date;
 import java.util.Optional;
 
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
@@ -29,6 +33,7 @@ public class CustomPerTest extends BrowserPerTest {
         super.onTestFailure(result);
         getScreenshotBytes().ifPresent(bytes -> Allure.getLifecycle().addAttachment("Screenshot", "image/png", "png", bytes));
         addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+        addAttachment("Console log", "text/plain", analyzeLog());
         closeWebDriver();
     }
 
@@ -36,6 +41,7 @@ public class CustomPerTest extends BrowserPerTest {
     public void onTestSuccess(ITestResult result) {
         super.onTestSuccess(result);
         addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+        addAttachment("Console log", "text/plain", analyzeLog());
         try {
             sleep(3000);
         } catch (InterruptedException e) {
@@ -53,5 +59,17 @@ public class CustomPerTest extends BrowserPerTest {
             LOGGER.warn("Could not get screen shot", e);
             return Optional.empty();
         }
+    }
+
+    public String analyzeLog() {
+        StringBuilder builder = new StringBuilder();
+        LogEntries logEntries = WebDriverRunner.getWebDriver().manage().logs().get(String.valueOf(LogType.BROWSER));
+        for (LogEntry entry : logEntries) {
+            builder.append(new Date(entry.getTimestamp()))
+                    .append(entry.getLevel())
+                    .append(entry.getMessage())
+                    .append("\n");
+        }
+        return builder.toString();
     }
 }

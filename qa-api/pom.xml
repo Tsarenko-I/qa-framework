@@ -11,5 +11,22 @@
 
     <artifactId>qa-api</artifactId>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.11.715</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
 
 </project>

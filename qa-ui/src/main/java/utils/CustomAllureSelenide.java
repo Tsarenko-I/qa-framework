@@ -7,11 +7,14 @@ import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StatusDetails;
 import io.qameta.allure.selenide.AllureSelenide;
+import io.qameta.allure.selenide.LogType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 import org.slf4j.Logger;
@@ -20,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Optional;
 
 import static io.qameta.allure.Allure.addAttachment;
@@ -38,10 +42,12 @@ public class CustomAllureSelenide extends AllureSelenide {
                     getScreenshotBytes().ifPresent(bytes -> lifecycle.addAttachment("Screenshot", "image/png", "png", bytes));
                     lifecycle.updateStep(step -> step.setStatus(Status.PASSED));
                     addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+                    addAttachment("Console log", "text/plain", analyzeLog());
                     break;
                 case FAIL:
                     getScreenshotBytes().ifPresent(bytes -> lifecycle.addAttachment("Screenshot", "image/png", "png", bytes));
                     addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+                    addAttachment("Console log", "text/plain", analyzeLog());
                     lifecycle.updateStep(stepResult -> {
                         stepResult.setStatus(getStatus(event.getError()).orElse(Status.BROKEN));
                         stepResult.setStatusDetails(getStatusDetails(event.getError()).orElse(new StatusDetails()));
@@ -98,5 +104,17 @@ public class CustomAllureSelenide extends AllureSelenide {
                 .attr("src", videoUrl.toString())
                 .attr("type", "video/mp4");
         return doc.toString();
+    }
+
+    public String analyzeLog() {
+        StringBuilder builder = new StringBuilder();
+        LogEntries logEntries = WebDriverRunner.getWebDriver().manage().logs().get(String.valueOf(LogType.BROWSER));
+        for (LogEntry entry : logEntries) {
+            builder.append(new Date(entry.getTimestamp()))
+                    .append(entry.getLevel())
+                    .append(entry.getMessage())
+                    .append("\n");
+        }
+        return builder.toString();
     }
 }

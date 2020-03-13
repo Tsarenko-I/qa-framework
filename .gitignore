@@ -4,3 +4,4 @@ allure-results/
 .idea/
 target/
 allure-report/
+qa-ui/.allure/

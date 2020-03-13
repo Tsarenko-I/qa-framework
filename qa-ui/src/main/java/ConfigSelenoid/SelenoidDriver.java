@@ -30,12 +30,13 @@ public class SelenoidDriver{
     public static void initDriver() {
         Configuration.remote = "http://localhost:8080/wd/hub";
         Configuration.driverManagerEnabled = false;
-        Configuration.browser = "firefox";
-        Configuration.browserVersion = "71";
+        Configuration.browser = "chrome";
+        Configuration.browserVersion = "79";
         Configuration.startMaximized = true;
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
+        capabilities.setCapability("sessionTimeout", "5m");
         Configuration.browserCapabilities = capabilities;
         Configuration.reportsFolder = "target/test-result/reports";
     }
