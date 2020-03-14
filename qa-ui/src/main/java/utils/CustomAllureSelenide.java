@@ -8,6 +8,7 @@ import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StatusDetails;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.OutputType;
@@ -26,6 +27,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Optional;
 
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.qameta.allure.Allure.addAttachment;
 import static io.qameta.allure.util.ResultsUtils.getStatus;
 import static io.qameta.allure.util.ResultsUtils.getStatusDetails;
@@ -42,11 +44,13 @@ public class CustomAllureSelenide extends AllureSelenide {
                     getScreenshotBytes().ifPresent(bytes -> lifecycle.addAttachment("Screenshot", "image/png", "png", bytes));
                     lifecycle.updateStep(step -> step.setStatus(Status.PASSED));
                     addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+                    addAttachment("WSConsole log", "text/plain", wsAnalyzeLog());
                     addAttachment("Console log", "text/plain", analyzeLog());
                     break;
                 case FAIL:
                     getScreenshotBytes().ifPresent(bytes -> lifecycle.addAttachment("Screenshot", "image/png", "png", bytes));
                     addAttachment("Video report", "text/html", new ByteArrayInputStream(generateHtmlVideoReport(getVideoUrl()).getBytes()), ".html");
+                    addAttachment("WSConsole log", "text/plain", wsAnalyzeLog());
                     addAttachment("Console log", "text/plain", analyzeLog());
                     lifecycle.updateStep(stepResult -> {
                         stepResult.setStatus(getStatus(event.getError()).orElse(Status.BROKEN));
@@ -106,7 +110,7 @@ public class CustomAllureSelenide extends AllureSelenide {
         return doc.toString();
     }
 
-    public String analyzeLog() {
+    public static String analyzeLog() {
         StringBuilder builder = new StringBuilder();
         LogEntries logEntries = WebDriverRunner.getWebDriver().manage().logs().get(String.valueOf(LogType.BROWSER));
         for (LogEntry entry : logEntries) {
@@ -115,6 +119,32 @@ public class CustomAllureSelenide extends AllureSelenide {
                     .append(entry.getMessage())
                     .append("\n");
         }
+        return builder.toString();
+    }
+
+    public static String wsAnalyzeLog() {
+        StringBuilder builder = new StringBuilder();
+        LogEntries logEntries = getWebDriver()
+                .manage()
+                .logs()
+                .get(org.openqa.selenium.logging.LogType.PERFORMANCE);
+        logEntries.forEach(entry -> {
+            JSONObject messageJSON = new JSONObject(entry.getMessage());
+            String method = messageJSON.getJSONObject("message").getString("method");
+            if (method.equalsIgnoreCase("Network.webSocketFrameSent")) {
+                builder
+                        .append("Message Sent: ")
+                        .append("\n")
+                        .append(messageJSON.getJSONObject("message").getJSONObject("params").getJSONObject("response").getString("payloadData"))
+                        .append("\n");
+            } else if (method.equalsIgnoreCase("Network.webSocketFrameReceived")) {
+                builder
+                        .append("Message Received: ")
+                        .append("\n")
+                        .append(messageJSON.getJSONObject("message").getJSONObject("params").getJSONObject("response").getString("payloadData"))
+                        .append("\n");
+            }
+        });
         return builder.toString();
     }
 }

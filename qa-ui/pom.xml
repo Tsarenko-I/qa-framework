@@ -89,7 +89,7 @@
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
-            <version>5.6.1</version>
+            <version>5.7.0</version>
         </dependency>
         <!--  owner-java8  -->
         <dependency>
@@ -131,6 +131,12 @@
             <artifactId>allure-testng</artifactId>
             <version>2.13.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20170516</version>
         </dependency>
 
     </dependencies>
